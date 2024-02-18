@@ -1,66 +1,73 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { credentials, productData } from '../types/shared.types';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { BehaviorSubject, Observable, of } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { environment } from '../../../environments/environment'
+import { credentials, product, productData, userInfo } from '../types/shared.types'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SharedService {
-  public userId$: BehaviorSubject<number> = new BehaviorSubject(0);
-  public userInfo$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public userId$: BehaviorSubject<number> = new BehaviorSubject<number>(0)
+  public userInfo$: BehaviorSubject<userInfo | null> = new BehaviorSubject<userInfo | null>(null)
   public productData$: BehaviorSubject<productData | null> = new BehaviorSubject<productData | null>(null)
-  public _authenticated: boolean = false
-  constructor(private _httpClient: HttpClient) { }
+  public authenticated: boolean = false
+
+  constructor(private httpClient: HttpClient) {}
+
   set accessToken(token: any) {
-    localStorage.setItem('accessInfo', JSON.stringify(token));
+    localStorage.setItem('accessInfo', JSON.stringify(token))
   }
 
   get accessToken(): any {
-    let getToken: any = localStorage.getItem('accessInfo');
-    JSON.parse(getToken)
-    return getToken ?? '';
+    const getToken = localStorage.getItem('accessInfo')
+    return JSON.parse(getToken || '{}')
   }
-  signIn(credentials: credentials): Observable<any> {
-    if (this._authenticated) {
-      alert('User is already logged in.');
+
+  signIn(credentials: credentials): Observable<credentials> {
+    if (this.authenticated) {
+      alert('User is already logged in.')
+      return of({ username: '', password: '' })
     }
 
-    return this._httpClient.post(`${environment.apiUrl}auth/login`, credentials).pipe(
-      map((res: any) => {
-        // Store the access token in the local storage
-        let accessInfo = {
+    return this.httpClient.post<any>(`${environment.apiUrl}auth/login`, credentials).pipe(
+      map((res) => {
+        const accessInfo = {
           accessToken: res.token,
           userID: res.id,
-          isLoogedIn: true
+          isLoggedIn: true,
         }
-        this.accessToken = accessInfo;
-        this._authenticated = true;
-        return of(res)
-      })
+        this.accessToken = accessInfo
+        this.authenticated = true
+        return res
+      }),
     )
   }
 
-
   check(): Observable<boolean> {
-    // Check if the user is logged in
-    if (this._authenticated) {
-      return of(true);
+    if (this.authenticated) {
+      return of(true)
     }
 
-    // Check the access token availability
-    if (!this.accessToken) {
-      return of(false);
+    if (!this.accessToken.accessToken) {
+      return of(false)
     }
 
     return of(true)
   }
 
-  getAllProducts() {
-    return this._httpClient.get<productData>(`${environment.apiUrl}products`).pipe(map((res) => {
-      this.productData$.next(res)
-      return res
-    }))
+  getAllProducts(): Observable<productData> {
+    return this.httpClient.get<productData>(`${environment.apiUrl}products`).pipe(
+      map((res) => {
+        this.productData$.next(res)
+        return res
+      }),
+    )
+  }
+
+  getProductDetails(productId: number): Observable<product> {
+    return this.httpClient.get<product>(`${environment.apiUrl}products/${productId}`)
   }
 }
