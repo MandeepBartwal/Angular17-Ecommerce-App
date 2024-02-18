@@ -6,6 +6,7 @@ import { noAuthGuard } from './shared/guard/no-auth.guard'
 import { ProductsComponent } from './modules/feature/products/products.component'
 import { ProductDetailsComponent } from './modules/feature/product-details/product-details.component'
 import { PageNotFoundComponent } from './shared/components/UI/page-not-found/page-not-found.component'
+import { UpdateProductComponent } from './modules/feature/update-product/update-product.component'
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -21,6 +22,7 @@ export const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'product', component: ProductsComponent },
       { path: 'product-details/:id', component: ProductDetailsComponent },
+      { path: 'update-product/:id', component: UpdateProductComponent },
       { path: '**', component: PageNotFoundComponent },
     ],
   },

@@ -132,9 +132,11 @@
                                 {{product.discountPercentage | percent }}</td>
 
                             <td class="p-4 space-x-2 whitespace-nowrap">
-                                <app-button buttonName="Update" buttonColor="bg-green-600"></app-button>
+                                <app-button buttonName="Update" buttonColor="bg-green-600"
+                                    [routerLink]="['/update-product', product.id]"></app-button>
                                 <app-button buttonName="Delete" buttonColor="bg-red-600"
-                                    (click)="deleteProduct()" data-modal-target="popup-modal" data-modal-toggle="popup-modal"></app-button>
+                                    (click)="deleteProduct(product.id)" data-modal-target="popup-modal"
+                                    data-modal-toggle="popup-modal"></app-button>
                             </td>
                         </tr>
                         }
@@ -148,6 +150,6 @@
 
 
 @if(modalBoxInfo.isVisible === true){
-    <h1>dhhdhdhd</h1>
-<app-modal [openBlockModal]="modalBoxInfo.isVisible"></app-modal>
+<app-modal [openBlockModal]="modalBoxInfo.isVisible" [modalContent]="modalBoxInfo" (modal)="isModalOpen($event)"
+    (deletedProduct)="sortProducts($event)"></app-modal>
 }

@@ -40,3 +40,28 @@ export interface product {
   thumbnail: string
   images: string[]
 }
+
+export interface modalInfo {
+  isVisible: boolean
+  id: number
+  content: string
+  title: string
+  modalType: string
+  buttonType: string
+}
+
+export interface deleteProduct {
+  id: number
+  title: string
+  description: string
+  price: number
+  discountPercentage: number
+  rating: number
+  stock: number
+  brand: string
+  category: string
+  thumbnail: string
+  images: string[]
+  isDeleted: boolean
+  deletedOn: string
+}

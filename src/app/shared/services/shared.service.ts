@@ -70,4 +70,8 @@ export class SharedService {
   getProductDetails(productId: number): Observable<product> {
     return this.httpClient.get<product>(`${environment.apiUrl}products/${productId}`)
   }
+
+  deleteProduct(productId: number) {
+    return this.httpClient.delete(`${environment.apiUrl}product/${productId}`)
+  }
 }

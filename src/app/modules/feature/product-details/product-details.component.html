@@ -1,3 +1,4 @@
+@if(productData != undefined || productData !== null){
 <section class="py-10 font-poppins dark:bg-gray-800">
     <div class="max-w-6xl px-4 mx-auto">
         <div class="flex flex-wrap mb-24 -mx-4">
@@ -12,8 +13,7 @@
                                 </path>
                             </svg>
                         </a>
-                        <img class="object-contain w-full lg:h-full"
-                            src="https://i.postimg.cc/0jwyVgqz/Microprocessor1-removebg-preview.png" alt="">
+                        <img class="object-contain w-full lg:h-full" [src]="productData?.images[0]" alt="prouct image">
                         <a class="absolute right-0 transform lg:mr-2 top-1/2 translate-1/2" href="#">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="w-5 h-5 text-blue-500 bi bi-chevron-right dark:text-blue-200"
@@ -24,36 +24,15 @@
                             </svg>
                         </a>
                     </div>
-                    <div class="flex-wrap hidden -mx-2 md:flex">
+                    <div class="flex-wrap hidden -mx-2 md:flex cursor-pointer">
+                        @for (image of productData?.images; track $index) {
                         <div class="w-1/2 p-2 sm:w-1/4">
-                            <a class="block border border-gray-200 hover:border-blue-400 dark:border-gray-700 dark:hover:border-blue-300"
-                                href="#">
-                                <img class="object-contain w-full lg:h-28"
-                                    src="https://i.postimg.cc/Z5KhRkD6/download-1-removebg-preview.png" alt="">
+                            <a
+                                class="block border border-gray-200 hover:border-blue-400 dark:border-gray-700 dark:hover:border-blue-300">
+                                <img class="object-contain w-full lg:h-28" [src]="image" alt="product image">
                             </a>
                         </div>
-                        <div class="w-1/2 p-2 sm:w-1/4">
-                            <a class="block border border-gray-200 hover:border-blue-400 dark:border-gray-700 dark:hover:border-blue-300"
-                                href="#">
-                                <img class="object-contain w-full lg:h-28"
-                                    src="https://i.postimg.cc/8kJBrw03/download-removebg-preview.png" alt="">
-                            </a>
-                        </div>
-                        <div class="w-1/2 p-2 sm:w-1/4">
-                            <a class="block border border-gray-200 hover:border-blue-400 dark:border-gray-700 dark:hover:border-blue-300"
-                                href="#">
-                                <img class="object-contain w-full lg:h-28"
-                                    src="https://i.postimg.cc/0jwyVgqz/Microprocessor1-removebg-preview.png" alt="">
-                            </a>
-                        </div>
-                        <div class="w-1/2 p-2 sm:w-1/4">
-                            <a class="block border border-gray-200 hover:border-blue-400 dark:border-gray-700 dark:hover:border-blue-300"
-                                href="#">
-                                <img class="object-contain w-full lg:h-28"
-                                    src="https://i.postimg.cc/0N4Kk1PN/black-microprocessors-removebg-preview.png"
-                                    alt="">
-                            </a>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -65,7 +44,7 @@
                             Arrival</span>
                         <h2
                             class="max-w-xl mt-6 mb-6 text-xl font-semibold leading-loose tracking-wide text-gray-700 md:text-2xl dark:text-gray-300">
-                           {{productData?.title}}
+                            {{productData?.title}}
                         </h2>
                         <div class="flex flex-wrap items-center mb-6">
                             <ul class="flex mb-4 mr-2 lg:mb-0">
@@ -149,11 +128,11 @@
                                                 <div>
                                                     <p
                                                         class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                                                        Discount 
+                                                        Discount
                                                     </p>
                                                     <h2
                                                         class="text-base font-semibold text-gray-700 dark:text-gray-400">
-                                                        {{productData?.discountPercentage |  percent: '1.2-2' }}
+                                                        {{productData?.discountPercentage | percent: '1.2-2' }}
                                                     </h2>
                                                 </div>
                                             </div>
@@ -210,7 +189,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -254,12 +233,9 @@
                                 </svg>
                             </button>
                         </div>
-                        <a href="#"
-                            class="w-full px-4 py-3 text-center text-blue-600 bg-blue-100 border border-blue-600 dark:hover:bg-gray-900 dark:text-gray-400 dark:border-gray-700 dark:bg-gray-700 hover:bg-blue-600 hover:text-gray-100 lg:w-1/2 rounded-xl">
-                            Add to cart
-                        </a>
                     </div>
                     <div class="flex gap-4 mb-6">
+                        <app-button buttonColor="bg-blue-600" buttonName="Update Product"></app-button>
                         <app-button buttonName="Delete Product" buttonColor="bg-red-600"></app-button>
                     </div>
                 </div>
@@ -267,3 +243,4 @@
         </div>
     </div>
 </section>
+}

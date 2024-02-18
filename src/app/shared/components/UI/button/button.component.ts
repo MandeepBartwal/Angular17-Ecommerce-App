@@ -12,7 +12,5 @@ export class ButtonComponent implements OnInit {
   @Input() buttonName: string = ''
   @Input() buttonColor: string = ''
 
-  ngOnInit(): void {
-    console.log(this.buttonName)
-  }
+  ngOnInit(): void {}
 }
