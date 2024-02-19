@@ -74,4 +74,8 @@ export class SharedService {
   deleteProduct(productId: number) {
     return this.httpClient.delete(`${environment.apiUrl}product/${productId}`)
   }
+
+  searchProduct(value: string) {
+    return this.httpClient.get(`${environment.apiUrl}product/search?q=${value}`)
+  }
 }
