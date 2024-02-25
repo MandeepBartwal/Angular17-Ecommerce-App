@@ -1,5 +1,22 @@
-import { CanActivateFn } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { Router, CanActivate } from '@angular/router';
+import { SharedService } from '../services/shared.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  return true;
-};
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(
+    private router: Router,
+    private _sharedService: SharedService,
+  ) {}
+
+  canActivate(): boolean {
+    if (this._sharedService.authenticated) {
+      return true;
+    } else {
+      this.router.navigate(['/login']);
+      return false;
+    }
+  }
+}

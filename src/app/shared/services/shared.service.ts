@@ -28,7 +28,6 @@ export class SharedService {
 
   signIn(credentials: credentials): Observable<credentials> {
     if (this.authenticated) {
-      alert('User is already logged in.')
       return of({ username: '', password: '' })
     }
 
